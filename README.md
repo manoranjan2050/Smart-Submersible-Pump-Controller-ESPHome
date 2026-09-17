@@ -1,22 +1,22 @@
 # 🚰 Smart Submersible Pump Controller (ESPHome)
 
-[![ESPHome](https://img.shields.io/badge/ESPHome-2025.12.7-orange?style=for-the-badge&logo=esphome)](https://esphome.io)
-[![Home Assistant](https://img.shields.io/badge/Home_Assistant-Compatible-blue?style=for-the-badge&logo=home-assistant)](https://home-assistant.io)
-[![GitHub Star](https://img.shields.io/github/stars/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome?style=for-the-badge)](https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome/stargazers)
+[![Validate ESPHome config](https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/actions/workflows/validate.yml/badge.svg)](https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/actions/workflows/validate.yml)
+[![ESPHome](https://img.shields.io/badge/ESPHome-2026.8%2B-orange?logo=esphome)](https://esphome.io)
+[![Home Assistant](https://img.shields.io/badge/Home_Assistant-Compatible-41BDF5?logo=home-assistant)](https://home-assistant.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An advanced IoT solution for single-phase submersible pumps. This project replaces or augments your manual motor starter with a smart, WiFi-enabled controller featuring **Dry-Run Protection**, **Energy Monitoring**, and **Real-time Feedback**.
+A ready-to-install **ESPHome package** for single-phase submersible/borewell pumps. It turns a Wemos D1 Mini + a 2-channel relay + a PZEM-004T energy meter into a smart, WiFi-controlled starter with **dry-run protection**, **live energy monitoring**, and a **Home Assistant dashboard** — no C++ and almost no YAML to write yourself.
+
+Point your ESPHome device file at this repository's package, add your WiFi details, and flash. Updates to the controller logic then ship to every device that uses the package with a one-line version bump — the same way any published ESPHome component works.
 
 ---
 
 ## 📸 Project Showcase
 
-### Hardware Build
 <p align="center">
   <img src="Image/controler.jpeg" width="45%" alt="Controller Front View" />
   <img src="Image/controler2.jpeg" width="45%" alt="Controller Side View" />
 </p>
-
-### Home Assistant Dashboard
 <p align="center">
   <img src="Image/motor_1.png" width="45%" alt="Dashboard Idle" />
   <img src="Image/motor_started.png" width="45%" alt="Dashboard Active" />
@@ -24,24 +24,16 @@ An advanced IoT solution for single-phase submersible pumps. This project replac
 
 ---
 
-## 📺 Video Demo
-Experience the smart controller in action. See the real-time feedback and relay switching.
-
-<p align="center">
-  <video src="demo.mp4" width="100%" controls>
-    Your browser does not support the video tag.
-  </video>
-</p>
-
----
-
 ## ✨ Key Features
 
-- **Dual-Phase Control:** Precise 2-second pulses for Start and Stop relays.
-- **Dry-Run Protection:** Automatically shuts down the motor if current (Amps) drops below a safe threshold.
-- **Power Monitoring:** Real-time Voltage, Current (Amps), Watts, and Total Energy (kWh) tracking via PZEM-004T.
-- **Dual SSID Support:** Automatically switches between primary and secondary WiFi networks.
-- **Industrial Dashboard:** Attractive, high-visibility Home Assistant UI with dynamic color-coded buttons.
+- **One-file setup** — your device YAML is ~10 lines; all logic lives in the shared [`packages/pump-controller.yaml`](packages/pump-controller.yaml).
+- **Dry-Run Protection** — auto-stops the motor if current draw falls below a configurable threshold (protects against burnt-out pumps running dry).
+- **Physical Running Feedback** — a `binary_sensor` derived from live current, so you know the motor is actually spinning, not just that a relay was pulsed.
+- **Full Energy Monitoring** — Voltage, Current, Watts, Frequency, and cumulative kWh via PZEM-004T.
+- **Dual-Phase Relay Control** — momentary 2–2.5 s pulses for Start/Stop, matching contactor-based motor starters.
+- **WiFi Fallback Hotspot + Captive Portal** — if your network is unreachable, the device opens its own AP so you can reconfigure it without re-flashing.
+- **OTA Updates** — flash once over USB, update wirelessly forever after.
+- **Ready-made Home Assistant dashboard** — see [`home-assistant/dashboard.yaml`](home-assistant/dashboard.yaml).
 
 ---
 
@@ -49,35 +41,105 @@ Experience the smart controller in action. See the real-time feedback and relay 
 
 | Component | Purpose |
 | :--- | :--- |
-| **Wemos D1 Mini** | The Brain (ESP8266) |
-| **PZEM-004T V3.0** | AC Energy Monitoring & Protection |
-| **2-Channel Relay** | High-Voltage Switching (Start/Stop) |
-| **Hi-Link HLK-PM01** | 5V DC Isolated Power Supply |
-
----
+| **Wemos D1 Mini** (ESP8266) | The brain |
+| **PZEM-004T V3.0** | AC voltage/current/energy monitoring |
+| **2-Channel 5V Relay Module** | High-voltage Start/Stop switching |
+| **Hi-Link HLK-PM01** (or similar) | Isolated 5V DC power supply |
+| Your existing motor starter/contactor panel | Start & Stop pushbutton terminals |
 
 ## 📐 Wiring Guide
 
-### Pin Mapping:
-- **Relay 1 (Start):** GPIO5 (D1)
-- **Relay 2 (Stop):** GPIO4 (D2)
-- **PZEM RX:** GPIO14 (D5)
-- **PZEM TX:** GPIO12 (D6)
+| Signal | Wemos D1 Mini Pin | Notes |
+| :--- | :--- | :--- |
+| Start relay | D1 (GPIO5) | Wired in parallel with the panel's Start pushbutton |
+| Stop relay | D2 (GPIO4) | Wired in parallel with the panel's Stop pushbutton |
+| PZEM RX | D5 (GPIO14) | To PZEM TX |
+| PZEM TX | D6 (GPIO12) | To PZEM RX |
+
+All pins and thresholds are overridable substitutions — see [Customization](#-customization) below.
+
+> **⚠️ DANGER: HIGH VOLTAGE.** This project involves 230V AC wiring. Improper installation can cause electrical shock, fire, or motor damage. Always disconnect the main breaker before working on the panel, and if you're not confident with mains wiring, hire a licensed electrician.
 
 ---
 
-## 🤝 Credits & Contributions
+## 🚀 Quick Start
 
-This project was made possible with contributions and technical guidance from:
+Full step-by-step instructions (including first-time USB flashing) are in **[INSTALLATION.md](INSTALLATION.md)**. The short version, once ESPHome is set up:
 
-- **Lead Developer:** [Your Name/Blog Name]
-- **Technical Contributor:** [@manoranjan2050](https://github.com/manoranjan2050)
+**1. Create `secrets.yaml`** next to your device file (copy from [`secrets.yaml.example`](secrets.yaml.example)):
+
+```yaml
+wifi_ssid: "YourWiFiName"
+wifi_password: "YourWiFiPassword"
+api_encryption_key: "PASTE_A_BASE64_32_BYTE_KEY_HERE"
+ota_password: "choose-a-strong-ota-password"
+```
+
+**2. Create your device file** (or copy [`smart-waterpump.yaml`](smart-waterpump.yaml)):
+
+```yaml
+substitutions:
+  name: shop-waterpump
+  friendly_name: Shop Waterpump
+
+packages:
+  pump_controller: github://manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/packages/pump-controller.yaml@main
+```
+
+**3. Flash it:**
+
+```bash
+esphome run smart-waterpump.yaml
+```
+
+That's it — sensors, dry-run protection, and the fallback AP all come from the package.
 
 ---
 
-## ⚠️ Safety Disclaimer
+## ⚙️ Customization
 
-> **DANGER: HIGH VOLTAGE.** This project involves 230V AC wiring. Improper installation can lead to electrical shock, fire, or damage to your motor. Always disconnect the main breaker before working on the panel.
+Override any of these in your own device YAML's `substitutions:` block — your value always wins over the package default.
+
+| Substitution | Default | Description |
+| :--- | :--- | :--- |
+| `name` | `smart-waterpump` | Device hostname / entity ID prefix |
+| `friendly_name` | `Smart Waterpump` | Display name in Home Assistant |
+| `board` | `d1_mini` | ESP8266 board type |
+| `start_relay_pin` | `D1` | GPIO driving the Start relay |
+| `stop_relay_pin` | `D2` | GPIO driving the Stop relay |
+| `pzem_rx_pin` | `D5` | UART RX to the PZEM-004T |
+| `pzem_tx_pin` | `D6` | UART TX to the PZEM-004T |
+| `start_pulse_duration` | `2.5s` | How long the Start relay stays closed |
+| `stop_pulse_duration` | `2s` | How long the Stop relay stays closed |
+| `dry_run_amps` | `1.0` | Current (A) below which the motor is considered dry-running |
+| `running_amps` | `0.5` | Current (A) above which the motor is considered running |
+| `pzem_update_interval` | `2s` | How often the PZEM is polled |
+| `ap_password` | `""` (open) | Password for the fallback WiFi hotspot |
+
+Need something the package doesn't expose as a substitution — a second WiFi network, a static IP, extra automations? Redefine that top-level key (e.g. `wifi:`) in your device file; ESPHome merges package and device configs, with the device file always taking precedence. See [INSTALLATION.md § Advanced overrides](INSTALLATION.md#advanced-overrides) for examples.
+
+---
+
+## 🏠 Home Assistant Dashboard
+
+Import [`home-assistant/dashboard.yaml`](home-assistant/dashboard.yaml) as a Manual card (replace the `shop_waterpump` entity prefix with your own device's). It gives you live voltage/current gauges, power/energy/frequency tiles, and big Start/Stop buttons.
+
+---
+
+## 🩺 Troubleshooting
+
+See [INSTALLATION.md § Troubleshooting](INSTALLATION.md#troubleshooting) for fixes to the most common issues (no PZEM readings, WiFi won't connect, dry-run trips too early/late, etc).
+
+---
+
+## 🤝 Contributing
+
+Issues and PRs are welcome — especially wiring diagrams for other pump types, ESP32 variants, or additional protection features (overvoltage/undervoltage cutoff, run-time limits).
+
+## 🙏 Credits
+
+- **[@manoranjan2050](https://github.com/manoranjan2050)** — project author & maintainer
 
 ## 📝 License
-Licensed under the MIT License.
+
+Licensed under the [MIT License](LICENSE).

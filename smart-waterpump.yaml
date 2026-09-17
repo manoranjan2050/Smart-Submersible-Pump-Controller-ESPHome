@@ -1,0 +1,22 @@
+## ------------------------------------------------------------------------
+## Example device file — this is ALL you need to create your own pump
+## controller. Copy this file into your ESPHome dashboard, rename it, and
+## adjust the two substitutions below. Everything else lives in the shared
+## package and gets pulled straight from GitHub at compile time.
+## ------------------------------------------------------------------------
+
+substitutions:
+  name: shop-waterpump
+  friendly_name: Shop Waterpump
+
+  # Only uncomment the lines below if your wiring differs from the defaults
+  # (Start=D1, Stop=D2, PZEM RX=D5, PZEM TX=D6). See README.md for the full
+  # list of overridable substitutions.
+  # start_relay_pin: D1
+  # stop_relay_pin: D2
+  # pzem_rx_pin: D5
+  # pzem_tx_pin: D6
+  # dry_run_amps: "1.0"
+
+packages:
+  pump_controller: github://manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/packages/pump-controller.yaml@main

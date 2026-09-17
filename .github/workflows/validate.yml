@@ -1,0 +1,28 @@
+name: Validate ESPHome config
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create dummy secrets
+        run: |
+          cat > secrets.yaml <<'EOF'
+          wifi_ssid: "ci-network"
+          wifi_password: "ci-password"
+          api_encryption_key: "Kp4vE1e2sN1uYb9wZ9nHwZ4hR6nHwZ4hR6nHwZ4hR6c="
+          ota_password: "ci-ota-password"
+          EOF
+
+      - name: Install ESPHome
+        run: pip install esphome
+
+      - name: Validate example device config
+        run: esphome config smart-waterpump.yaml
