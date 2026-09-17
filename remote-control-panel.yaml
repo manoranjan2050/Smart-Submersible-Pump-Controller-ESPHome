@@ -1,6 +1,7 @@
 ## ------------------------------------------------------------------------
-## Example device file for the physical remote control panel. Copy this into
-## your ESPHome dashboard, adjust the substitutions, and flash.
+## Example device file for the physical remote control panel (ESP8266 /
+## Wemos D1 Mini). Copy this into your ESPHome dashboard, adjust the
+## substitutions and WiFi secrets, and flash.
 ## ------------------------------------------------------------------------
 
 substitutions:
@@ -15,3 +16,19 @@ substitutions:
 
 packages:
   remote_panel: github://manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/packages/remote-control-panel.yaml@main
+
+# The package deliberately has no default WiFi network — every deployment
+# has different credentials, so this device file always provides its own.
+# Use your own secret names here (these examples use distinct
+# `remote_panel_*` secrets so they never collide with another device's).
+wifi:
+  networks:
+    - ssid: !secret remote_panel_wifi_ssid
+      password: !secret remote_panel_wifi_password
+      priority: 100
+    - ssid: !secret remote_panel_wifi_ssid_backup
+      password: !secret remote_panel_wifi_password_backup
+      priority: 50
+  ap:
+    ssid: "${friendly_name} Fallback"
+  min_auth_mode: WPA2

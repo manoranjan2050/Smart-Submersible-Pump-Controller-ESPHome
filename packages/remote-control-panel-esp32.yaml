@@ -1,10 +1,14 @@
 ## ------------------------------------------------------------------------
-## Pump Remote Control Panel — ESPHome package
+## Pump Remote Control Panel — ESPHome package (ESP32 variant)
 ## https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome
 ##
-## A standalone ESP8266 button box: press Green to start the pump, Red to
-## stop it. It doesn't talk to the pump controller directly — it calls the
-## pump controller's existing Start/Stop switch entities through the Home
+## Same as packages/remote-control-panel.yaml, but for an ESP32 dev board
+## instead of a Wemos D1 Mini (ESP8266). Use this one if your remote panel
+## is built on an ESP32.
+##
+## A standalone button box: press Green to start the pump, Red to stop it.
+## It doesn't talk to the pump controller directly — it calls the pump
+## controller's existing Start/Stop switch entities through the Home
 ## Assistant API, exactly like tapping the dashboard tiles would.
 ##
 ## Two onboard LEDs give at-a-glance link health:
@@ -16,13 +20,14 @@
 substitutions:
   name: pump-remote-panel
   friendly_name: Pump Remote Panel
-  board: d1_mini
+  board: esp32dev
 
-  # GPIO pin assignments (Wemos D1 Mini silkscreen labels).
-  green_button_pin: D1
-  red_button_pin: D2
-  wifi_led_pin: D5
-  status_led_pin: D6
+  # GPIO pin assignments — chosen to avoid ESP32 strapping/flash pins
+  # (0, 2, 5, 6-11, 12, 15) and input-only pins (34-39, no internal pull-up).
+  green_button_pin: GPIO27
+  red_button_pin: GPIO26
+  wifi_led_pin: GPIO25
+  status_led_pin: GPIO33
 
   # Debounce time for both buttons.
   button_debounce: 20ms
@@ -41,15 +46,16 @@ esphome:
     name: "electroiot.pump_remote_control_panel"
     version: "1.0.0"
 
-esp8266:
+esp32:
   board: ${board}
-  early_pin_init: false
+  framework:
+    type: arduino
 
 logger:
 
 # `wifi:` is intentionally NOT defined here — every deployment has different
 # credentials, so your device file must always supply its own full `wifi:`
-# block (networks + optional `ap:` fallback). See remote-control-panel.yaml
+# block (networks + optional `ap:` fallback). See remote-control-panel-esp32.yaml
 # for a ready-to-copy example.
 
 captive_portal:
