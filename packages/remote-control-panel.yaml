@@ -1,6 +1,6 @@
 ## ------------------------------------------------------------------------
 ## Pump Remote Control Panel — ESPHome package
-## https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome
+## https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome
 ##
 ## A standalone ESP8266 button box: press Green to start the pump, Red to
 ## stop it. It doesn't talk to the pump controller directly — it calls the

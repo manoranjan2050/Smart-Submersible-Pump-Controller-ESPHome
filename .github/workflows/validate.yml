@@ -21,6 +21,10 @@ jobs:
           ota_password: "ci-ota-password"
           remote_panel_api_encryption_key: "Rm9vQmFyQmF6UXV1eEZvb0JhckJhelF1dXhGb29CYXI="
           remote_panel_ota_password: "ci-ota-password-2"
+          remote_panel_wifi_ssid: "ci-network"
+          remote_panel_wifi_password: "ci-password"
+          remote_panel_wifi_ssid_backup: "ci-network-backup"
+          remote_panel_wifi_password_backup: "ci-password-backup"
           EOF
 
       - name: Install ESPHome
@@ -29,5 +33,8 @@ jobs:
       - name: Validate pump controller example config
         run: esphome config smart-waterpump.yaml
 
-      - name: Validate remote control panel example config
+      - name: Validate remote control panel example config (ESP8266)
         run: esphome config remote-control-panel.yaml
+
+      - name: Validate remote control panel example config (ESP32)
+        run: esphome config remote-control-panel-esp32.yaml

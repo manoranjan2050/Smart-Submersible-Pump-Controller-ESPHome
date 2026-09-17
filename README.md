@@ -84,7 +84,7 @@ substitutions:
   friendly_name: Shop Waterpump
 
 packages:
-  pump_controller: github://manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/packages/pump-controller.yaml@main
+  pump_controller: github://ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome/packages/pump-controller.yaml@main
 ```
 
 **3. Flash it:**

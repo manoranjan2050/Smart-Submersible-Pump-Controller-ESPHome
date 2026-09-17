@@ -1,6 +1,6 @@
 ## ------------------------------------------------------------------------
 ## Smart Submersible Pump Controller — ESPHome package
-## https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome
+## https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome
 ##
 ## This file is the reusable "component". Do not edit it directly — override
 ## any value from your own device YAML via `substitutions:` or by redefining
