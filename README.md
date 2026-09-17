@@ -120,6 +120,21 @@ Need something the package doesn't expose as a substitution — a second WiFi ne
 
 ---
 
+## 🔴🟢 Optional: Physical Remote Control Panel
+
+A second, standalone ESP8266 package — a wall-mounted button box with a Green (Start) and Red (Stop) button, plus two status LEDs — lives in [`packages/remote-control-panel.yaml`](packages/remote-control-panel.yaml). It doesn't talk to the pump controller directly; it calls the pump controller's existing `switch.*_start_pump` / `switch.*_stop_pump` entities through the Home Assistant API, exactly like tapping the dashboard tiles.
+
+| Signal | Wemos D1 Mini Pin | Notes |
+| :--- | :--- | :--- |
+| Green (Start) button | D1 (GPIO5) | Other leg to GND, internal pull-up, no resistor needed |
+| Red (Stop) button | D2 (GPIO4) | Other leg to GND, internal pull-up, no resistor needed |
+| WiFi status LED | D5 (GPIO14) | LED + ~220–330Ω resistor to GND — lit whenever WiFi is connected |
+| API/HA status LED | D6 (GPIO12) | LED + ~220–330Ω resistor to GND — lit whenever the Home Assistant API link is up (i.e. button presses will actually work) |
+
+Setup is the same pattern as the pump controller — copy [`remote-control-panel.yaml`](remote-control-panel.yaml), add the two extra secrets it needs (`remote_panel_api_encryption_key`, `remote_panel_ota_password` — see [`secrets.yaml.example`](secrets.yaml.example)), and flash. If your pump device isn't named `shop-waterpump`, override `start_switch_entity_id` / `stop_switch_entity_id` in its substitutions.
+
+---
+
 ## 🏠 Home Assistant Dashboard
 
 Import [`home-assistant/dashboard.yaml`](home-assistant/dashboard.yaml) as a Manual card (replace the `shop_waterpump` entity prefix with your own device's). It gives you live voltage/current gauges, power/energy/frequency tiles, and big Start/Stop buttons.

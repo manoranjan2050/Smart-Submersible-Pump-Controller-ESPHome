@@ -1,0 +1,17 @@
+## ------------------------------------------------------------------------
+## Example device file for the physical remote control panel. Copy this into
+## your ESPHome dashboard, adjust the substitutions, and flash.
+## ------------------------------------------------------------------------
+
+substitutions:
+  name: pump-remote-panel
+  friendly_name: Pump Remote Panel
+
+  # Point these at your actual pump controller's switch entities if your
+  # device isn't named "shop-waterpump" (Settings > Devices & Services >
+  # Entities in Home Assistant to find the exact entity_ids).
+  # start_switch_entity_id: switch.shop_waterpump_start_pump
+  # stop_switch_entity_id: switch.shop_waterpump_stop_pump
+
+packages:
+  remote_panel: github://manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/packages/remote-control-panel.yaml@main
