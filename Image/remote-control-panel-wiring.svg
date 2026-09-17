@@ -1,0 +1,172 @@
+<svg viewBox="0 0 920 620" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="boardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f2a3d"/>
+      <stop offset="100%" stop-color="#111826"/>
+    </linearGradient>
+    <radialGradient id="ledBlue" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#bfe3ff"/>
+      <stop offset="45%" stop-color="#4aa8ff"/>
+      <stop offset="100%" stop-color="#0b63c9"/>
+    </radialGradient>
+    <radialGradient id="ledAmber" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffe9b8"/>
+      <stop offset="45%" stop-color="#ffb238"/>
+      <stop offset="100%" stop-color="#c76a00"/>
+    </radialGradient>
+    <radialGradient id="btnGreen" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#8bf0a8"/>
+      <stop offset="55%" stop-color="#22b455"/>
+      <stop offset="100%" stop-color="#0d7a34"/>
+    </radialGradient>
+    <radialGradient id="btnRed" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#ffb0ab"/>
+      <stop offset="55%" stop-color="#e6392f"/>
+      <stop offset="100%" stop-color="#a0140c"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="920" height="620" fill="#f7f8fa"/>
+
+  <text x="460" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#111826">Pump Remote Control Panel — Wiring</text>
+  <text x="460" y="60" text-anchor="middle" font-size="13" fill="#5b6472">Wemos D1 Mini (ESP8266) · 2 push buttons + 2 status LEDs</text>
+
+  <!-- ===================== BOARD ===================== -->
+  <g>
+    <rect x="380" y="150" width="160" height="330" rx="14" fill="url(#boardGrad)" stroke="#0a0f18" stroke-width="2"/>
+    <rect x="440" y="140" width="40" height="16" rx="4" fill="#8a97a8"/>
+    <text x="460" y="180" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">Wemos</text>
+    <text x="460" y="198" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">D1 Mini</text>
+    <text x="460" y="216" text-anchor="middle" font-size="10" fill="#9fb0c6">(ESP8266)</text>
+    <circle cx="460" cy="300" r="26" fill="#0a0f18" stroke="#2a3a52" stroke-width="2"/>
+    <text x="460" y="305" text-anchor="middle" font-size="9" fill="#6f81a0">ESP-12F</text>
+
+    <!-- unused pin ticks, left -->
+    <g stroke="#5c6b83" stroke-width="3">
+      <line x1="380" y1="175" x2="365" y2="175"/>
+      <line x1="380" y1="195" x2="365" y2="195"/>
+      <line x1="380" y1="215" x2="365" y2="215"/>
+    </g>
+    <!-- unused pin ticks, right -->
+    <g stroke="#5c6b83" stroke-width="3">
+      <line x1="540" y1="175" x2="555" y2="175"/>
+      <line x1="540" y1="195" x2="555" y2="195"/>
+      <line x1="540" y1="215" x2="555" y2="215"/>
+      <line x1="540" y1="410" x2="555" y2="410"/>
+      <line x1="540" y1="430" x2="555" y2="430"/>
+      <line x1="540" y1="450" x2="555" y2="450"/>
+    </g>
+    <!-- unused pin ticks, left bottom -->
+    <g stroke="#5c6b83" stroke-width="3">
+      <line x1="380" y1="370" x2="365" y2="370"/>
+    </g>
+
+    <!-- D1 pin (left) -->
+    <line x1="380" y1="255" x2="330" y2="255" stroke="#f2c744" stroke-width="4"/>
+    <circle cx="380" cy="255" r="4" fill="#f2c744"/>
+    <text x="372" y="250" text-anchor="end" font-size="14" font-weight="700" fill="#0f1622">D1</text>
+
+    <!-- D2 pin (left) -->
+    <line x1="380" y1="315" x2="330" y2="315" stroke="#f2685a" stroke-width="4"/>
+    <circle cx="380" cy="315" r="4" fill="#f2685a"/>
+    <text x="372" y="310" text-anchor="end" font-size="14" font-weight="700" fill="#0f1622">D2</text>
+
+    <!-- D5 pin (right) -->
+    <line x1="540" y1="255" x2="590" y2="255" stroke="#4aa8ff" stroke-width="4"/>
+    <circle cx="540" cy="255" r="4" fill="#4aa8ff"/>
+    <text x="548" y="250" font-size="14" font-weight="700" fill="#0f1622">D5</text>
+
+    <!-- D6 pin (right) -->
+    <line x1="540" y1="315" x2="590" y2="315" stroke="#ffb238" stroke-width="4"/>
+    <circle cx="540" cy="315" r="4" fill="#ffb238"/>
+    <text x="548" y="310" font-size="14" font-weight="700" fill="#0f1622">D6</text>
+
+    <!-- 5V (bottom left) -->
+    <line x1="380" y1="450" x2="330" y2="450" stroke="#c9a227" stroke-width="4"/>
+    <circle cx="380" cy="450" r="4" fill="#c9a227"/>
+    <text x="372" y="445" text-anchor="end" font-size="13" font-weight="700" fill="#0f1622">5V</text>
+
+    <!-- GND (bottom right) -->
+    <line x1="540" y1="450" x2="590" y2="450" stroke="#9aa4b2" stroke-width="4"/>
+    <circle cx="540" cy="450" r="4" fill="#9aa4b2"/>
+    <text x="548" y="445" font-size="13" font-weight="700" fill="#0f1622">GND</text>
+  </g>
+
+  <!-- ===================== START BUTTON (D1) ===================== -->
+  <g>
+    <line x1="330" y1="255" x2="180" y2="255" stroke="#f2c744" stroke-width="4"/>
+    <rect x="120" y="225" width="120" height="80" rx="12" fill="#ffffff" stroke="#d7dce3" stroke-width="1.5"/>
+    <circle cx="180" cy="255" r="24" fill="url(#btnGreen)" stroke="#0d7a34" stroke-width="2"/>
+    <text x="180" y="298" text-anchor="middle" font-size="13" font-weight="700" fill="#0d7a34">START</text>
+    <line x1="180" y1="279" x2="180" y2="540" stroke="#3a4250" stroke-width="3"/>
+  </g>
+
+  <!-- ===================== STOP BUTTON (D2) ===================== -->
+  <g>
+    <line x1="330" y1="315" x2="180" y2="315" stroke="#f2685a" stroke-width="4"/>
+    <rect x="120" y="345" width="120" height="80" rx="12" fill="#ffffff" stroke="#d7dce3" stroke-width="1.5"/>
+    <circle cx="180" cy="375" r="24" fill="url(#btnRed)" stroke="#a0140c" stroke-width="2"/>
+    <text x="180" y="418" text-anchor="middle" font-size="13" font-weight="700" fill="#a0140c">STOP</text>
+    <line x1="180" y1="399" x2="180" y2="540" stroke="#3a4250" stroke-width="3"/>
+  </g>
+
+  <!-- ===================== WIFI LED (D5) ===================== -->
+  <g>
+    <line x1="590" y1="255" x2="660" y2="255" stroke="#4aa8ff" stroke-width="4"/>
+    <!-- resistor -->
+    <rect x="660" y="246" width="46" height="18" rx="3" fill="#f2e4c9" stroke="#8a7746" stroke-width="1.5"/>
+    <g stroke="#8a5a2b" stroke-width="2">
+      <line x1="669" y1="246" x2="669" y2="264"/>
+      <line x1="678" y1="246" x2="678" y2="264"/>
+      <line x1="687" y1="246" x2="687" y2="264"/>
+    </g>
+    <line x1="706" y1="255" x2="740" y2="255" stroke="#4aa8ff" stroke-width="4"/>
+    <path d="M 740 235 a20 20 0 1 1 0 40 l 0 20 h 0 z" fill="url(#ledBlue)" stroke="#0b63c9" stroke-width="2"/>
+    <line x1="760" y1="255" x2="760" y2="540" stroke="#3a4250" stroke-width="3"/>
+    <text x="710" y="220" text-anchor="middle" font-size="12" font-weight="700" fill="#0b63c9">WiFi LED</text>
+    <text x="683" y="285" text-anchor="middle" font-size="10" fill="#6f6247">~270Ω</text>
+  </g>
+
+  <!-- ===================== STATUS LED (D6) ===================== -->
+  <g>
+    <line x1="590" y1="315" x2="660" y2="315" stroke="#ffb238" stroke-width="4"/>
+    <!-- resistor -->
+    <rect x="660" y="306" width="46" height="18" rx="3" fill="#f2e4c9" stroke="#8a7746" stroke-width="1.5"/>
+    <g stroke="#8a5a2b" stroke-width="2">
+      <line x1="669" y1="306" x2="669" y2="324"/>
+      <line x1="678" y1="306" x2="678" y2="324"/>
+      <line x1="687" y1="306" x2="687" y2="324"/>
+    </g>
+    <line x1="706" y1="315" x2="740" y2="315" stroke="#ffb238" stroke-width="4"/>
+    <path d="M 740 295 a20 20 0 1 1 0 40 l 0 20 h 0 z" fill="url(#ledAmber)" stroke="#c76a00" stroke-width="2"/>
+    <line x1="760" y1="315" x2="760" y2="540" stroke="#3a4250" stroke-width="3"/>
+    <text x="710" y="345" text-anchor="middle" font-size="12" font-weight="700" fill="#c76a00">Status/API LED</text>
+    <text x="683" y="345" text-anchor="middle" font-size="10" fill="#6f6247" transform="translate(-27,-30)">~270Ω</text>
+  </g>
+
+  <!-- ===================== 5V RAIL ===================== -->
+  <g>
+    <line x1="330" y1="450" x2="60" y2="450" stroke="#c9a227" stroke-width="4"/>
+    <line x1="60" y1="450" x2="60" y2="540" stroke="#c9a227" stroke-width="4"/>
+    <text x="40" y="500" text-anchor="middle" font-size="12" font-weight="700" fill="#8a7315" transform="rotate(-90 40 500)">5V SUPPLY</text>
+  </g>
+
+  <!-- ===================== GND COMMON RAIL ===================== -->
+  <g>
+    <line x1="60" y1="540" x2="860" y2="540" stroke="#3a4250" stroke-width="5"/>
+    <line x1="590" y1="450" x2="860" y2="450" stroke="#9aa4b2" stroke-width="4"/>
+    <line x1="860" y1="450" x2="860" y2="540" stroke="#9aa4b2" stroke-width="4"/>
+    <g transform="translate(460,540)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#3a4250" stroke-width="4"/>
+      <line x1="-16" y1="14" x2="16" y2="14" stroke="#3a4250" stroke-width="4"/>
+      <line x1="-10" y1="21" x2="10" y2="21" stroke="#3a4250" stroke-width="3"/>
+      <line x1="-4" y1="28" x2="4" y2="28" stroke="#3a4250" stroke-width="2"/>
+    </g>
+    <text x="460" y="575" text-anchor="middle" font-size="13" font-weight="700" fill="#3a4250">GND — common ground rail (buttons + LEDs + board)</text>
+  </g>
+
+  <!-- ===================== LEGEND ===================== -->
+  <g font-size="11" fill="#5b6472">
+    <text x="460" y="600" text-anchor="middle">Buttons: one leg → GPIO, other leg → GND (internal pull-up, no resistor needed) · LEDs: GPIO → resistor → LED anode, cathode → GND</text>
+  </g>
+</svg>

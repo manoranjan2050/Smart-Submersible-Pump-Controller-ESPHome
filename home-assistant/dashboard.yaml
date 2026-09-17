@@ -1,0 +1,78 @@
+## ------------------------------------------------------------------------
+## Home Assistant Lovelace card for the Smart Submersible Pump Controller.
+##
+## Replace every occurrence of `shop_waterpump` below with your own device's
+## entity prefix (this is the `name:` substitution you set in your device
+## YAML, with hyphens turned into underscores). In Home Assistant, go to
+## Settings > Devices & Services > Entities and filter by your device name
+## to confirm the exact prefix.
+##
+## Paste this into a Manual Card (Dashboard > Edit > Add Card > Manual) or
+## into a dashboard's raw YAML editor.
+## ------------------------------------------------------------------------
+
+type: vertical-stack
+cards:
+  - type: heading
+    heading: "⚡ PUMP CONTROL"
+    heading_style: title
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: gauge
+        entity: sensor.shop_waterpump_pump_voltage
+        name: Line Voltage
+        min: 160
+        max: 270
+        needle: true
+        severity:
+          green: 210
+          yellow: 190
+          red: 0
+      - type: gauge
+        entity: sensor.shop_waterpump_pump_amps
+        name: Motor Load
+        min: 0
+        max: 15
+        needle: true
+        severity:
+          green: 5
+          yellow: 15
+          red: 20
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: entity
+        entity: sensor.shop_waterpump_pump_watts
+        name: Power
+      - type: entity
+        entity: sensor.shop_waterpump_pump_total_energy
+        name: Total kWh
+      - type: entity
+        entity: sensor.shop_waterpump_pump_ac_frequency
+        name: Freq
+  - type: horizontal-stack
+    cards:
+      - type: tile
+        entity: switch.shop_waterpump_start_pump
+        name: START
+        icon: mdi:water-pump
+        color: green
+        state_content:
+          - state
+        tap_action:
+          action: toggle
+      - type: tile
+        entity: switch.shop_waterpump_stop_pump
+        name: STOP
+        icon: mdi:water-pump-off
+        color: red
+        tap_action:
+          action: toggle
+  - type: tile
+    entity: binary_sensor.shop_waterpump_pump_running_status
+    name: Current Motor Status
+    color: green
+    hide_state: false

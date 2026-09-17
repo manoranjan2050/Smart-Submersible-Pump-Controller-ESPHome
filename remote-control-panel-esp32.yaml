@@ -1,0 +1,27 @@
+## ------------------------------------------------------------------------
+## Example device file for the ESP32 variant of the remote control panel.
+## Copy this into your ESPHome dashboard, adjust substitutions, and flash.
+## ------------------------------------------------------------------------
+
+substitutions:
+  name: pump-remote-panel
+  friendly_name: Pump Remote Panel
+
+packages:
+  remote_panel:
+    url: https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome
+    ref: main
+    files: [packages/remote-control-panel-esp32.yaml]
+    refresh: 0s
+
+wifi:
+  networks:
+    - ssid: !secret remote_panel_wifi_ssid
+      password: !secret remote_panel_wifi_password
+      priority: 100
+    - ssid: !secret remote_panel_wifi_ssid_backup
+      password: !secret remote_panel_wifi_password_backup
+      priority: 50
+  ap:
+    ssid: "${friendly_name} Fallback"
+  min_auth_mode: WPA2
