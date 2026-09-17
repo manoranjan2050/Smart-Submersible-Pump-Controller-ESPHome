@@ -124,6 +124,10 @@ Need something the package doesn't expose as a substitution — a second WiFi ne
 
 A second, standalone ESP8266 package — a wall-mounted button box with a Green (Start) and Red (Stop) button, plus two status LEDs — lives in [`packages/remote-control-panel.yaml`](packages/remote-control-panel.yaml). It doesn't talk to the pump controller directly; it calls the pump controller's existing `switch.*_start_pump` / `switch.*_stop_pump` entities through the Home Assistant API, exactly like tapping the dashboard tiles.
 
+<p align="center">
+  <img src="Image/remote-control-panel-wiring.svg" width="100%" alt="Remote control panel wiring diagram: Wemos D1 Mini with a green Start button on D1, a red Stop button on D2, a WiFi status LED on D5, and a Home Assistant status LED on D6, all sharing a common GND rail" />
+</p>
+
 | Signal | Wemos D1 Mini Pin | Notes |
 | :--- | :--- | :--- |
 | Green (Start) button | D1 (GPIO5) | Other leg to GND, internal pull-up, no resistor needed |
