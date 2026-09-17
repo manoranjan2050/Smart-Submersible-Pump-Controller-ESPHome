@@ -1,9 +1,10 @@
 # 🚰 Smart Submersible Pump Controller (ESPHome)
 
-[![Validate ESPHome config](https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/actions/workflows/validate.yml/badge.svg)](https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/actions/workflows/validate.yml)
+[![Validate ESPHome config](https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome/actions/workflows/validate.yml/badge.svg)](https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome/actions/workflows/validate.yml)
 [![ESPHome](https://img.shields.io/badge/ESPHome-2026.8%2B-orange?logo=esphome)](https://esphome.io)
 [![Home Assistant](https://img.shields.io/badge/Home_Assistant-Compatible-41BDF5?logo=home-assistant)](https://home-assistant.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub Star](https://img.shields.io/github/stars/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome?style=flat)](https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome/stargazers)
 
 A ready-to-install **ESPHome package** for single-phase submersible/borewell pumps. It turns a Wemos D1 Mini + a 2-channel relay + a PZEM-004T energy meter into a smart, WiFi-controlled starter with **dry-run protection**, **live energy monitoring**, and a **Home Assistant dashboard** — no C++ and almost no YAML to write yourself.
 
