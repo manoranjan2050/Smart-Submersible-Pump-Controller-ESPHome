@@ -135,7 +135,9 @@ A second, standalone ESP8266 package — a wall-mounted button box with a Green 
 | WiFi status LED | D5 (GPIO14) | LED + ~220–330Ω resistor to GND — lit whenever WiFi is connected |
 | API/HA status LED | D6 (GPIO12) | LED + ~220–330Ω resistor to GND — lit whenever the Home Assistant API link is up (i.e. button presses will actually work) |
 
-Setup is the same pattern as the pump controller — copy [`remote-control-panel.yaml`](remote-control-panel.yaml), add the two extra secrets it needs (`remote_panel_api_encryption_key`, `remote_panel_ota_password` — see [`secrets.yaml.example`](secrets.yaml.example)), and flash. If your pump device isn't named `shop-waterpump`, override `start_switch_entity_id` / `stop_switch_entity_id` in its substitutions.
+Setup is the same pattern as the pump controller — copy [`remote-control-panel.yaml`](remote-control-panel.yaml) (ESP8266) or [`remote-control-panel-esp32.yaml`](remote-control-panel-esp32.yaml) (ESP32), add its secrets (see [`secrets.yaml.example`](secrets.yaml.example)), and flash. If your pump device isn't named `shop-waterpump`, override `start_switch_entity_id` / `stop_switch_entity_id` in its substitutions.
+
+**Full walkthrough, including the one step everyone misses:** [INSTALLATION.md § Remote Control Panel Setup](INSTALLATION.md#remote-control-panel-setup-optional). Home Assistant blocks ESPHome devices from calling its services by default — until you enable **"Allow the device to perform Home Assistant actions"** on the panel's ESPHome integration entry, the buttons will register a press but do nothing. That's covered in Step 6.
 
 ---
 

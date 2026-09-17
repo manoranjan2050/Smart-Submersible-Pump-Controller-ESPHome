@@ -65,6 +65,92 @@ esphome run shop-waterpump.yaml   # OTA if the device is already online
 
 ---
 
+## Remote Control Panel Setup (optional)
+
+This walks through building the physical Green/Red button panel from scratch and connecting it to a pump controller you've already set up above. It doesn't wire to the pump directly — it calls the pump's Start/Stop switches **through Home Assistant**, so the pump controller must already be added to Home Assistant first.
+
+### 1. Wire it up
+
+Follow the [wiring diagram in README.md](README.md#-optional-physical-remote-control-panel): Green button → D1 (ESP8266) or GPIO27 (ESP32), Red button → D2 / GPIO26, WiFi LED → D5 / GPIO25, Status LED → D6 / GPIO33, all other legs to GND. Buttons need no resistor (internal pull-up); LEDs need a ~220–330Ω resistor in series.
+
+### 2. Add secrets
+
+Add to your `secrets.yaml` (use distinct `remote_panel_*` names so they never collide with your pump controller's own WiFi/API secrets):
+
+```yaml
+remote_panel_wifi_ssid: "YourWiFiName"
+remote_panel_wifi_password: "YourWiFiPassword"
+remote_panel_wifi_ssid_backup: "YourBackupWiFiName"      # optional
+remote_panel_wifi_password_backup: "YourBackupPassword"  # optional
+remote_panel_api_encryption_key: "PASTE_A_DIFFERENT_BASE64_32_BYTE_KEY_HERE"
+remote_panel_ota_password: "choose-a-different-strong-ota-password"
+```
+
+### 3. Create the device file
+
+Copy [`remote-control-panel.yaml`](remote-control-panel.yaml) (ESP8266/D1 Mini) or [`remote-control-panel-esp32.yaml`](remote-control-panel-esp32.yaml) (ESP32) into your dashboard. If your pump device isn't named `shop-waterpump`, uncomment and edit `start_switch_entity_id` / `stop_switch_entity_id` in the substitutions to match your actual switch entity IDs.
+
+> If you update the package on GitHub and re-flash within 24 hours, ESPHome may serve a stale cached copy. Switch the `packages:` line to the long form with `refresh: 0s` to force a fresh pull — see the example device files for the exact syntax.
+
+### 4. First flash (via USB)
+
+Same as the pump controller: **Install → Plug into this computer** for the first flash, OTA from then on.
+
+### 5. Add the panel to Home Assistant
+
+**Settings → Devices & Services** — it should auto-discover as "Pump Remote Panel." If not, **Add Integration → ESPHome**, enter its IP and the `remote_panel_api_encryption_key`.
+
+### 6. Enable Home Assistant actions — the step it's easy to miss
+
+The buttons work by calling a Home Assistant service (`switch.turn_on`) from the ESP, and **Home Assistant blocks this by default** for security. Without this step, button presses register on the device (you'll see the "Start Button"/"Stop Button" sensors flicker) but nothing downstream happens — no error, just silence.
+
+1. **Settings → Devices & Services → ESPHome**
+2. Find the **Pump Remote Panel** entry (not the pump controller's) and open **Configure** (⚙️ / three-dot menu)
+3. Enable **"Allow the device to perform Home Assistant actions"**
+4. Save
+
+### 7. Add a status/diagnostic card (optional but handy while testing)
+
+Since the physical LEDs may not be wired yet, this lets you watch connectivity and button presses live from the dashboard:
+
+```yaml
+type: vertical-stack
+cards:
+  - type: heading
+    heading: "🎛️ REMOTE PANEL STATUS"
+    heading_style: title
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: tile
+        entity: binary_sensor.pump_remote_panel_wifi_connected
+        name: WiFi Link
+        icon: mdi:wifi
+      - type: tile
+        entity: binary_sensor.pump_remote_panel_home_assistant_connected
+        name: HA Link
+        icon: mdi:home-assistant
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: tile
+        entity: binary_sensor.pump_remote_panel_start_button
+        name: Start Button (live)
+        icon: mdi:gesture-tap-button
+      - type: tile
+        entity: binary_sensor.pump_remote_panel_stop_button
+        name: Stop Button (live)
+        icon: mdi:gesture-tap-button
+```
+
+### 8. Test it
+
+Short the Start pin to GND (or press the physical button once wired) — "Start Button (live)" should flicker on, and `switch.shop_waterpump_start_pump` should actually toggle. If the button flickers but the pump switch never moves, go back to Step 6.
+
+---
+
 ## Advanced overrides
 
 Because `packages:` merges dictionaries with your device file taking precedence, you can override or extend anything the package defines by redeclaring that top-level key.
@@ -113,3 +199,5 @@ wifi:
 | Relay clicks on power-up | Confirm `early_pin_init: false` and `restore_mode: RESTORE_DEFAULT_OFF` are present (they are, by default, in the package) — these prevent boot-time relay flicker. |
 | `esphome config` fails in CI / locally | Make sure `secrets.yaml` exists with **all four** required keys (`wifi_ssid`, `wifi_password`, `api_encryption_key`, `ota_password`). |
 | `[uart_id] is an invalid option for [sensor.pzemac]` or similar | Your ESPHome install predates the `pzemac` → `modbus` migration. Update ESPHome (`pip install --upgrade esphome`, or update the ESPHome add-on) to at least the version in the badge at the top of [README.md](README.md). |
+| `packages/....yaml does not exist in repository` right after pushing a change | Stale package cache — ESPHome only re-fetches a `github://` package once every 24 hours by default. Use the long-form `packages:` syntax with `refresh: 0s` (see the remote panel device files for the exact syntax) to force a fresh pull. |
+| Remote panel button flickers the "Start/Stop Button" sensor, but the pump switch never moves | Home Assistant blocks ESPHome devices from calling HA services by default. Go to **Settings → Devices & Services → ESPHome → (Pump Remote Panel) → Configure** and enable **"Allow the device to perform Home Assistant actions."** See [Remote Control Panel Setup § 6](#6-enable-home-assistant-actions--the-step-its-easy-to-miss). |
