@@ -1,6 +1,6 @@
 ## ------------------------------------------------------------------------
 ## Pump Remote Control Panel — ESPHome package (ESP32 variant)
-## https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome
+## https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome
 ##
 ## Same as packages/remote-control-panel.yaml, but for an ESP32 dev board
 ## instead of a Wemos D1 Mini (ESP8266). Use this one if your remote panel

@@ -9,7 +9,7 @@ substitutions:
 
 packages:
   remote_panel:
-    url: https://github.com/manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome
+    url: https://github.com/ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome
     ref: main
     files: [packages/remote-control-panel-esp32.yaml]
     refresh: 0s

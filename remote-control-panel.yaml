@@ -15,7 +15,7 @@ substitutions:
   # stop_switch_entity_id: switch.shop_waterpump_stop_pump
 
 packages:
-  remote_panel: github://manoranjan2050/Smart-Submersible-Pump-Controller-ESPHome/packages/remote-control-panel.yaml@main
+  remote_panel: github://ElectroIoT/Smart-Submersible-Pump-Controller-ESPHome/packages/remote-control-panel.yaml@main
 
 # The package deliberately has no default WiFi network — every deployment
 # has different credentials, so this device file always provides its own.
